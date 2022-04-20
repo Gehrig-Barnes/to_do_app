@@ -1,4 +1,4 @@
-lass ApplicationController < ActionController::API
+class ApplicationController < ActionController::API
   include ActionController::Cookies
 
   rescue_from ActiveRecord::RecordInvalid, with: :render_invalid_response
@@ -23,3 +23,5 @@ lass ApplicationController < ActionController::API
   def render_not_found_response(error)
     render json: { error: "#{error.model} not found" }, status: :not_found
   end
+
+end
