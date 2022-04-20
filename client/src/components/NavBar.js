@@ -1,9 +1,9 @@
 import React from 'react'
 
-function NavBar(){
+function NavBar({handleLogOutClick}){
     return (
         <div>
-            NavBar
+            <button onClick={handleLogOutClick}>Logout</button>
         </div>
     )
 

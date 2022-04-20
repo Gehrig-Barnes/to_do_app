@@ -31,10 +31,8 @@ function LoginForm({onLogin}){
               <h1 className="welcome">To_do_app </h1>
               <Form onSubmit={handleSubmit}>
                 <Form.Group className="login">
-                  <Form.Label>Email address</Form.Label>
+                  <Form.Label>User Name</Form.Label>
                   <Form.Control
-                    id="email"
-                    type="email"
                     placeholder="Enter email"
                     autoComplete="off"
                     value={userName}

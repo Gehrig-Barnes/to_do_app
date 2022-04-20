@@ -28,7 +28,7 @@ function Login({onLogin}){
                         <>
                             <SignUpForm onLogin={onLogin} />
                             <p>
-                                Already have an account? &nbsp;
+                                Already have an account? 
                                 <Button  className="m-3" variant="outline-dark" onClick={() => setShowLogin(true)}>
                                     Log In
                                 </Button>

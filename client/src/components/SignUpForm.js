@@ -16,7 +16,7 @@ function SignUpForm ({onLogin}){
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        userName,
+        username: userName,
         password,
         password_confirmation: passwordConfirmation,
       }),
@@ -37,11 +37,11 @@ function SignUpForm ({onLogin}){
             <h1>Create an Account</h1>
             <Form onSubmit={handleSubmit}>
               <Form.Group className="mb-3">
-                <Form.Label>Email address</Form.Label>
+                <Form.Label>User Name</Form.Label>
                 <Form.Control
-                  id="email"
-                  type="email"
-                  placeholder="Enter email"
+                  id="username"
+                  type="username"
+                  placeholder="Enter User Name"
                   autoComplete="off"
                   value={userName}
                   onChange={(e) => setUserName(e.target.value)}
