@@ -1,11 +1,25 @@
 import React, { useState } from 'react';
-import { Container, Form, Button, Alert, Card } from 'react-bootstrap'
+import { Container, Form, Button, Alert, Card} from 'react-bootstrap'
+import { useNavigate } from 'react-router-dom';
 
 function LoginForm({onLogin}){
-    const [userName, setUserName] = useState("");
-    const [password, setPassword] = useState("");
-    const [errors, setErrors] = useState([]);
-    const [isLoading, setIsLoading] = useState(false);
+  const [userObj, setUserObj] = useState({
+    email: '',
+    password: ''
+  })
+  const [errors, setErrors] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const nav = useNavigate()
+
+  const handleChange = (e) => {
+    setUserObj((prev) => {
+      return ({
+        ...prev,
+        [e.target.id]: e.target.value
+      })
+    })
+  }
+    
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -13,11 +27,12 @@ function LoginForm({onLogin}){
         fetch("/login", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ userName, password }),
+          body: JSON.stringify(userObj),
         }).then((r) => {
           setIsLoading(false);
           if (r.ok) {
             r.json().then((user) => onLogin(user));
+            nav("/")
           } else {
             r.json().then((err) => setErrors(err.errors));
           }
@@ -35,8 +50,9 @@ function LoginForm({onLogin}){
                   <Form.Control
                     placeholder="Enter email"
                     autoComplete="off"
-                    value={userName}
-                    onChange={(e) => setUserName(e.target.value)}
+                    id="email"
+                    value={userObj.email}
+                    onChange={handleChange}
                   />
                 </Form.Group>
                 <Form.Group className="login">
@@ -46,8 +62,8 @@ function LoginForm({onLogin}){
                     type="password"
                     placeholder="Password"
                     autoComplete="current-password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    value={userObj.password}
+                    onChange={handleChange}
                   />
                 </Form.Group>
                 <button className="login_button" type="submit">

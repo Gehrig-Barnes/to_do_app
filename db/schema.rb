@@ -10,36 +10,66 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_04_20_164400) do
+ActiveRecord::Schema.define(version: 2022_12_11_221740) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "completeds", force: :cascade do |t|
-    t.string "title"
-    t.string "to_do"
-    t.bigint "user_id", null: false
+  create_table "artists", force: :cascade do |t|
+    t.string "username"
+    t.string "email"
+    t.string "password_digest"
+    t.string "about"
+    t.string "image"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["user_id"], name: "index_completeds_on_user_id"
   end
 
-  create_table "tasks", force: :cascade do |t|
-    t.string "title"
-    t.string "to_do"
+  create_table "arts", force: :cascade do |t|
+    t.string "name"
+    t.string "description"
+    t.integer "price"
+    t.boolean "rented"
+    t.bigint "artist_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["artist_id"], name: "index_arts_on_artist_id"
+  end
+
+  create_table "rents", force: :cascade do |t|
+    t.date "start"
+    t.date "end"
+    t.integer "price"
+    t.bigint "user_id", null: false
+    t.bigint "art_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["art_id"], name: "index_rents_on_art_id"
+    t.index ["user_id"], name: "index_rents_on_user_id"
+  end
+
+  create_table "reviews", force: :cascade do |t|
+    t.string "comment"
+    t.integer "rating"
+    t.bigint "art_id", null: false
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["user_id"], name: "index_tasks_on_user_id"
+    t.index ["art_id"], name: "index_reviews_on_art_id"
+    t.index ["user_id"], name: "index_reviews_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
     t.string "username"
+    t.string "email"
     t.string "password_digest"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  add_foreign_key "completeds", "users"
-  add_foreign_key "tasks", "users"
+  add_foreign_key "arts", "artists"
+  add_foreign_key "rents", "arts"
+  add_foreign_key "rents", "users"
+  add_foreign_key "reviews", "arts"
+  add_foreign_key "reviews", "users"
 end

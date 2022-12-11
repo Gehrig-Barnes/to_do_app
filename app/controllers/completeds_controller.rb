@@ -1,2 +1,0 @@
-class CompletedsController < ApplicationController
-end

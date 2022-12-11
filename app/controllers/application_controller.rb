@@ -9,10 +9,16 @@ class ApplicationController < ActionController::API
   def current_user
     User.find_by(id: session[:user_id])
   end
+
+  def current_artist
+    Artist.find_by(id: session[:artist_id])
+  end
   
   def authorize
-    render json: { errors: ["Not authorized"] }, status: :unauthorized unless current_user
+    render json: { errors: ["Not authorized"] }, status: :unauthorized unless (current_user || current_artist)
   end
+
+
 
   private
 

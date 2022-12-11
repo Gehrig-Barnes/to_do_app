@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
-import Login from './components/Login';
+import Login from './components/Login/Login';
 import { Routes, Route, useNavigate } from "react-router-dom";
-import NavBar from './components/NavBar';
+import NavBar from './components/NavBar/NavBar';
+import Explore from "./components/Explore/Explore";
+import HomePage from "./components/HomePage/HomePage";
+import Collection from "./components/Collection/Collection";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -25,19 +28,19 @@ function App() {
         }
     });
     // Navigate to home page after logout and clear history
-    navigate("/");
+    navigate("/login");
 }
-
-if (!user)
-    return (
-      <>
-        <Login onLogin={setUser} />
-      </>
-    );
-
   return (
+    
     <div className="App">
+      
      <NavBar user={user} handleLogOutClick={handleLogOutClick} />
+     <Routes>
+      <Route path="/login" element={<Login onLogin={setUser}/>}/>
+      <Route path="/explore" element={<Explore/>}/>
+      <Route path="/collection" element={<Collection/>}/>
+      <Route path="/" element={<HomePage/>}/>
+     </Routes>
     </div>
   );
 }

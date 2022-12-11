@@ -1,12 +1,17 @@
 import React, { useState } from "react";
 import { Container, Form, Button, Alert, Card } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 function SignUpForm ({onLogin}){
-  const [userName, setUserName] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [errors, setErrors] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+
+  const navigate = useNavigate();
+
+
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -16,7 +21,7 @@ function SignUpForm ({onLogin}){
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        username: userName,
+        email: email,
         password,
         password_confirmation: passwordConfirmation,
       }),
@@ -24,6 +29,7 @@ function SignUpForm ({onLogin}){
       setIsLoading(false);
       if (r.ok) {
         r.json().then((user) => onLogin(user));
+        navigate("/")
       } else {
         r.json().then((err) => setErrors(err.errors));
       }
@@ -39,12 +45,12 @@ function SignUpForm ({onLogin}){
               <Form.Group className="mb-3">
                 <Form.Label>User Name</Form.Label>
                 <Form.Control
-                  id="username"
-                  type="username"
+                  id="email"
+                  type="email"
                   placeholder="Enter User Name"
                   autoComplete="off"
-                  value={userName}
-                  onChange={(e) => setUserName(e.target.value)}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </Form.Group>
     

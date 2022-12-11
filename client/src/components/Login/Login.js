@@ -1,6 +1,6 @@
 import React, {useState} from "react";
-import LoginForm from './LoginForm'
-import SignUpForm from "./SignUpForm";
+import LoginForm from './LoginForm/LoginForm'
+import SignUpForm from "./SignUp/SignUpForm";
 import {Container, Button, Figure, Row, Col} from 'react-bootstrap';
 
 function Login({onLogin}){
@@ -8,11 +8,7 @@ function Login({onLogin}){
     return (        
         <Container className="mt-5">
             <Row className="justify-content-md-center">
-                <Col>
-                    <Figure>
-                        <Figure.Image width={600} alt="Inventory & POS"/>
-                    </Figure>
-                </Col>
+                
                 <Col>
                     { showLogin ? (
                         <>
