@@ -1,5 +1,6 @@
 class SessionsController < ApplicationController
     skip_before_action :authorize, only: :login
+    skip_before_action :authorize, only: :artist_login
 
     def login
             user = User.find_by(email: params[:email])
@@ -17,10 +18,10 @@ class SessionsController < ApplicationController
     end
 
     def artist_login
-        user = User.find_by(email: params[:email])
-        if user&.authenticate(params[:password])
-            session[:artist_id] = user.id
-            render json: user, status: :ok
+        artist = Artist.find_by(email: params[:email])
+        if artist&.authenticate(params[:password])
+            session[:artist_id] = artist.id
+            render json: artist, status: :ok
         else
             render json: { errors: ["Invalid email or password"] }, status: :unauthorized
         end

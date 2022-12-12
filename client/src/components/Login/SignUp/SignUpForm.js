@@ -1,42 +1,59 @@
 import React, { useState } from "react";
-import { Container, Form, Button, Alert, Card } from "react-bootstrap";
+import {
+  Container,
+  Form,
+  Button,
+  ToggleButton,
+  ButtonGroup,
+  Alert,
+  Card,
+} from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
-function SignUpForm ({onLogin}){
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [passwordConfirmation, setPasswordConfirmation] = useState("");
+function SignUpForm({ onLogin, setArtist }) {
+  const [userObj, setUserObj] = useState({
+    email: "",
+    password: "",
+    password_confirmation: "",
+  });
+
+  const handleChange = (e) => {
+    setUserObj({
+      ...userObj,
+      [e.target.id]: e.target.value,
+    });
+  };
   const [errors, setErrors] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
+  const [radioValue, setRadioValue] = useState("login");
+  const radios = [
+    { name: "Renter", value: "signup" },
+    { name: "Artist", value: "artist_signup" },
+  ];
+
   const navigate = useNavigate();
-
-
 
   function handleSubmit(e) {
     e.preventDefault();
     setErrors([]);
     setIsLoading(true);
-    fetch("/signup", {
+    fetch(`/${radioValue}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        email: email,
-        password,
-        password_confirmation: passwordConfirmation,
-      }),
+      body: JSON.stringify(userObj),
     }).then((r) => {
       setIsLoading(false);
       if (r.ok) {
-        r.json().then((user) => onLogin(user));
-        navigate("/")
+        r.json().then((user) => radioValue === 'signup' ? onLogin(user) : setArtist(user));
+        navigate("/");
       } else {
         r.json().then((err) => setErrors(err.errors));
       }
     });
   }
-    return (
-        <div>
+  return (
+    <div>
       <Container>
         <Card style={{ width: "20rem" }} className="sign_card">
           <Card.Body>
@@ -47,13 +64,13 @@ function SignUpForm ({onLogin}){
                 <Form.Control
                   id="email"
                   type="email"
-                  placeholder="Enter User Name"
+                  placeholder="Enter Email"
                   autoComplete="off"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  value={userObj.email}
+                  onChange={handleChange}
                 />
               </Form.Group>
-    
+
               <Form.Group className="mb-3">
                 <Form.Label>Password</Form.Label>
                 <Form.Control
@@ -61,8 +78,8 @@ function SignUpForm ({onLogin}){
                   type="password"
                   placeholder="Password"
                   autoComplete="current-password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  value={userObj.password}
+                  onChange={handleChange}
                 />
               </Form.Group>
               <Form.Group className="mb-3">
@@ -72,11 +89,11 @@ function SignUpForm ({onLogin}){
                   type="password"
                   placeholder="Confirm Password"
                   autoComplete="current-password"
-                  value={passwordConfirmation}
-                  onChange={(e) => setPasswordConfirmation(e.target.value)}
+                  value={userObj.password_confirmation}
+                  onChange={handleChange}
                 />
               </Form.Group>
-              
+
               <Button type="submit">
                 {isLoading ? "Loading..." : "Login"}
               </Button>
@@ -88,9 +105,26 @@ function SignUpForm ({onLogin}){
             </Form>
           </Card.Body>
         </Card>
+        <br />
+        <ButtonGroup>
+          {radios.map((radio, idx) => (
+            <ToggleButton
+              key={idx}
+              id={`radio-${idx}`}
+              type="radio"
+              variant={idx % 2 ? "outline-success" : "outline-danger"}
+              name="radio"
+              value={radio.value}
+              checked={radioValue === radio.value}
+              onChange={(e) => setRadioValue(e.currentTarget.value)}
+            >
+              {radio.name}
+            </ToggleButton>
+          ))}
+        </ButtonGroup>
       </Container>
     </div>
-    )
+  );
 }
 
-export default SignUpForm
+export default SignUpForm;

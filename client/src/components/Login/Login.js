@@ -3,7 +3,7 @@ import LoginForm from './LoginForm/LoginForm'
 import SignUpForm from "./SignUp/SignUpForm";
 import {Container, Button, Figure, Row, Col} from 'react-bootstrap';
 
-function Login({onLogin}){
+function Login({onLogin, setArtist}){
     const [showLogin, setShowLogin] = useState(true);
     return (        
         <Container className="mt-5">
@@ -12,7 +12,7 @@ function Login({onLogin}){
                 <Col>
                     { showLogin ? (
                         <>
-                            <LoginForm onLogin={onLogin} />
+                            <LoginForm setArtist={setArtist} onLogin={onLogin} />
                             <div>Don't have an account? &nbsp;
                                 <Button variant="outline-dark" onClick={() => setShowLogin(false)}>
                                     Sign Up
@@ -22,7 +22,7 @@ function Login({onLogin}){
                         </>
                     ): (
                         <>
-                            <SignUpForm onLogin={onLogin} />
+                            <SignUpForm setArtist={setArtist} onLogin={onLogin} />
                             <p>
                                 Already have an account? 
                                 <Button  className="m-3" variant="outline-dark" onClick={() => setShowLogin(true)}>

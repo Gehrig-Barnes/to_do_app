@@ -1,8 +1,8 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
 
-function NavBar({ handleLogOutClick, user }) {
-  const showLogOutButton = user ? (
+function NavBar({ handleLogOutClick, user, artist }) {
+  const showLogOutButton = user || artist ? (
     <button onClick={handleLogOutClick}>Logout</button>
   ) : (
     <NavLink to="/login">LOGIN</NavLink>
