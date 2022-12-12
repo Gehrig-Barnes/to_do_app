@@ -52,10 +52,10 @@ function LoginForm({ onLogin, setArtist }) {
   }
   return (
     <div>
-      <Container>
+      <Container >
         <Card style={{ width: "20rem" }} className="login_card">
-          <Card.Body>
-            <h1 className="welcome">Art Share</h1>
+          <Card.Body className = "cardBody">
+            <h1 className="loginTitle">Art Share</h1>
             <Form onSubmit={handleSubmit}>
               <Form.Group className="login">
                 <Form.Label>User Name</Form.Label>

@@ -1,4 +1,15 @@
 .login_card {
+   
+    background-color: rgb(191, 52, 52);
   
-  
+}
+
+.loginTitle{
+    font-style: italic;
+    font-family: cursive;
+}
+
+.cardBody{
+    background-color: rgb(255, 255, 255);
+    
 }
