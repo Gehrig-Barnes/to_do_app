@@ -1,8 +1,9 @@
 import React from 'react'
+import './Explore.css'
 
 function Explore(){
     return (
-        <div>
+        <div className='explore'>
             explore art
         </div>
     )

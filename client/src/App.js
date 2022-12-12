@@ -6,6 +6,7 @@ import Explore from "./components/Explore/Explore";
 import HomePage from "./components/HomePage/HomePage";
 import Collection from "./components/Collection/Collection";
 import ArtistCollection from "./components/ArtistCollection/ArtistCollection";
+import './App.css'
 
 function App() {
   const [user, setUser] = useState(null);
@@ -58,13 +59,14 @@ function App() {
         artist={artist}
         handleLogOutClick={handleLogOutClick}
       />
-
+       <div className="routes">
       <Routes>
         {user || artist ? null : (
           <Route
             path="/login"
             element={<Login onLogin={setUser} setArtist={setArtist} />}
           />
+          
         )}
         <Route path="/explore" element={<Explore />} />
         <Route
@@ -73,6 +75,7 @@ function App() {
         />
         <Route path="/" element={<HomePage />} />
       </Routes>
+      </div>
     </div>
   );
 }

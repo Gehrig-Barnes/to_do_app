@@ -1,0 +1,20 @@
+#card_container {
+  display: flex;
+  width: 500px;
+  height: 700px;
+  position: absolute;
+  margin: auto;
+  top: 10%;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  overflow: hidden;
+}
+
+#register_click{
+    margin-left: 6%;
+    color: rgb(58, 80, 190);
+    cursor: pointer;
+    text-decoration: underline;
+    
+}

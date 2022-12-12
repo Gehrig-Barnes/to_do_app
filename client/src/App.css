@@ -1,1 +1,6 @@
 
+.App{
+    background-color: rgba(12, 11, 11, 0.932);
+    min-height: 100vh;
+    position: relative;
+}

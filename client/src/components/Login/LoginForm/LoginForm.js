@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import {
   Container,
   Form,
@@ -8,6 +7,8 @@ import {
   Alert,
   Card,
 } from "react-bootstrap";
+import React, { useState } from "react";
+import "./LoginForm.css";
 import { useNavigate } from "react-router-dom";
 
 function LoginForm({ onLogin, setArtist }) {
@@ -22,10 +23,7 @@ function LoginForm({ onLogin, setArtist }) {
     { name: "Renter", value: "login" },
     { name: "Artist", value: "artist_login" },
   ];
-
-
   const nav = useNavigate();
-
   const handleChange = (e) => {
     setUserObj((prev) => {
       return {
@@ -34,7 +32,6 @@ function LoginForm({ onLogin, setArtist }) {
       };
     });
   };
-
   function handleSubmit(e) {
     e.preventDefault();
     fetch(`/${radioValue}`, {
@@ -44,7 +41,9 @@ function LoginForm({ onLogin, setArtist }) {
     }).then((r) => {
       setIsLoading(false);
       if (r.ok) {
-        r.json().then((user) => radioValue === 'login' ? onLogin(user) : setArtist(user));
+        r.json().then((user) =>
+          radioValue === "login" ? onLogin(user) : setArtist(user)
+        );
         nav("/");
       } else {
         r.json().then((err) => setErrors(err.errors));
@@ -52,11 +51,11 @@ function LoginForm({ onLogin, setArtist }) {
     });
   }
   return (
-    <div className="background">
+    <div>
       <Container>
         <Card style={{ width: "20rem" }} className="login_card">
           <Card.Body>
-            <h1 className="welcome">To_do_app </h1>
+            <h1 className="welcome">Art Share</h1>
             <Form onSubmit={handleSubmit}>
               <Form.Group className="login">
                 <Form.Label>User Name</Form.Label>
@@ -88,26 +87,29 @@ function LoginForm({ onLogin, setArtist }) {
                 </Alert>
               ))}
             </Form>
+            
+            <br />
+              <h5>Shopper or Artist ?</h5>
+            <ButtonGroup>
+              
+              {radios.map((radio, idx) => (
+                <ToggleButton
+                  key={idx}
+                  id={`radio-${idx}`}
+                  type="radio"
+                  variant={idx % 2 ? "outline-success" : "outline-danger"}
+                  name="radio"
+                  value={radio.value}
+                  checked={radioValue === radio.value}
+                  onChange={(e) => setRadioValue(e.currentTarget.value)}
+                >
+                  
+                  {radio.name}
+                </ToggleButton>
+              ))}
+            </ButtonGroup>
           </Card.Body>
         </Card>
-
-        <br />
-        <ButtonGroup>
-          {radios.map((radio, idx) => (
-            <ToggleButton
-              key={idx}
-              id={`radio-${idx}`}
-              type="radio"
-              variant={idx % 2 ? "outline-success" : "outline-danger"}
-              name="radio"
-              value={radio.value}
-              checked={radioValue === radio.value}
-              onChange={(e) => setRadioValue(e.currentTarget.value)}
-            >
-              {radio.name}
-            </ToggleButton>
-          ))}
-        </ButtonGroup>
       </Container>
     </div>
   );
